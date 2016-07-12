@@ -1,0 +1,62 @@
+rm -rf /cygdrive/c/cygwin64/ev3rt/hrp2/sdk/workspace/.././OBJ/
+cd /cygdrive/c/cygwin64/ev3rt/hrp2/sdk/workspace/.././OBJ/ && \
+/cygdrive/c/cygwin64/ev3rt/hrp2/sdk/workspace/../../configure -T ev3_gcc -A app \
+	-a ../workspace/test003 \
+	-t ../workspace/test003 \
+	-D ../.. \
+	-L ../common/library \
+	-l c++ \
+	-m .ev3rt_temp_Makefile -o "-DBUILD_MODULE" \
+	-U "" && \
+rm /cygdrive/c/cygwin64/ev3rt/hrp2/sdk/workspace/test003/.ev3rt_temp_Makefile && \
+mv .ev3rt_temp_Makefile Makefile && \
+make clean
+configure: Generating .ev3rt_temp_Makefile from ../workspace/test003/.ev3rt_temp_Makefile.
+configure: Generating app.cpp from ../workspace/test003/app.cpp.
+configure: Generating app.h from ../workspace/test003/app.h.
+configure: Generating app.cfg from ../workspace/test003/app.cfg.
+make[1]: Entering directory '/cygdrive/c/cygwin64/ev3rt/hrp2/sdk/OBJ'
+rm -f cfg1_out cfg1_out.o cfg1_out.c cfg1_out.syms cfg1_out.srec module_cfg.h module_cfg.c \#* *~ *.o
+make[1]: Leaving directory '/cygdrive/c/cygwin64/ev3rt/hrp2/sdk/OBJ'
+make[1]: Entering directory '/cygdrive/c/cygwin64/ev3rt/hrp2/sdk/OBJ'
+  CFG[1]  module_cfg.h
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+  CFG[2]  module_cfg.h
+
+make[1]: Leaving directory '/cygdrive/c/cygwin64/ev3rt/hrp2/sdk/OBJ'
+make[1]: Entering directory '/cygdrive/c/cygwin64/ev3rt/hrp2/sdk/OBJ'
+  CC      module_cfg.c
+  CC      ../../library/t_perror.c
+  CC      ../../library/strerror.c
+  CC      ../../library/vasyslog.c
+  CC      ../../target/ev3_gcc/TLSF-2.4.6/src/tlsf.c
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+  CC      ../common/ev3api/src/ev3api.c
+  CC      ev3api_cfg.c
+  CC      ../common/ev3api/src/ev3api_battery.c
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+  CC      ../common/ev3api/src/ev3api_brick.c
+  CC      ../common/ev3api/src/ev3api_fs.c
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+  CC      ../common/ev3api/src/ev3api_speaker.c
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+  CC      ../common/ev3api/src/ev3api_lcd.c
+  CC      ../common/ev3api/src/ev3api_motor.c
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+  CC      ../common/ev3api/src/ev3api_newlib.c
+  CC      ../common/ev3api/src/ev3api_sensor.c
+  CXX     ../workspace/test003/util.cpp
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+  CXX     ../workspace/test003/app/Tracer.cpp
+cc1.exe: warning: command line option '-fno-use-cxa-atexit' is valid for C++/ObjC++ but not for C [enabled by default]
+  CXX     app.cpp
+  LD      app
+make[1]: Leaving directory '/cygdrive/c/cygwin64/ev3rt/hrp2/sdk/OBJ'

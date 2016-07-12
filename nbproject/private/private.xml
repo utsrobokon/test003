@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <code-assistance-data xmlns="http://www.netbeans.org/ns/make-project-private/1">
+        <code-model-enabled>true</code-model-enabled>
+    </code-assistance-data>
+    <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
+        <activeConfTypeElem>0</activeConfTypeElem>
+        <activeConfIndexElem>0</activeConfIndexElem>
+    </data>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/cygwin64/ev3rt/hrp2/sdk/workspace/test003/app.h</file>
+            <file>file:/C:/cygwin64/ev3rt/hrp2/sdk/workspace/test003/app/Tracer.h</file>
+            <file>file:/C:/cygwin64/ev3rt/hrp2/sdk/workspace/test003/app/Tracer.cpp</file>
+            <file>file:/C:/cygwin64/ev3rt/hrp2/sdk/workspace/test003/pid.cpp</file>
+            <file>file:/C:/cygwin64/ev3rt/hrp2/sdk/workspace/test003/BalancerCpp.cpp</file>
+            <file>file:/C:/cygwin64/ev3rt/hrp2/sdk/workspace/test003/app.cpp</file>
+            <file>file:/C:/cygwin64/ev3rt/hrp2/sdk/workspace/test003/BalancerCpp.h</file>
+            <file>file:/C:/cygwin64/ev3rt/hrp2/sdk/workspace/test003/app.cfg</file>
+            <file>file:/C:/cygwin64/ev3rt/hrp2/sdk/workspace/test003/pid.h</file>
+        </group>
+    </open-files>
+</project-private>
