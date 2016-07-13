@@ -81,7 +81,7 @@ void main_task(intptr_t unused) {
     /* Open Bluetooth file */
     bt = ev3_serial_open_file(EV3_SERIAL_BT);
     fprintf(bt, "main_task start\n");
-    assert(bt != NULL);
+//    assert(bt != NULL);
 
     /* Bluetooth通信タスクの起動 */
     act_tsk(BT_TASK);
