@@ -128,21 +128,35 @@ void main_task(intptr_t unused) {
     }
     
 
-    fprintf(bt, "tatti ato\n");
+    fprintf(bt, "start dash\n");
     
+    // 滑らかスタートお試し
+    int i;
+    i = 0;
+    for(i = 0; i < 15 ; i++)
+    {
+        tail_control(TAIL_ANGLE_STAND_UP + i); 
+        tslp_tsk(5); // 5msecウェイト
+    }
     
-    /* 走行モーターエンコーダーリセット */
+/*
+    while(1)
+    {
+        tail_control(TAIL_ANGLE_DRIVE);
+        tslp_tsk(4);
+    }
+*/
+
+    // 走行モーターエンコーダーリセット
     ev3_motor_reset_counts(left_motor);
     ev3_motor_reset_counts(right_motor);
 
-    /* ジャイロセンサーリセット */
+    // ジャイロセンサーリセット
     ev3_gyro_sensor_reset(gyro_sensor);
     balancer.init(GYRO_OFFSET);
 
-    /* pid制御リセット */
+    // pid制御リセット
     pid Pid;
-
-    fprintf(bt, "while(1)2 mae\n");
     
     while(1)
     {
@@ -152,40 +166,27 @@ void main_task(intptr_t unused) {
         int16_t target_val;
         
 
+        // バックボタンが押されたら終了
         if (ev3_button_is_pressed(BACK_BUTTON)) break;
-
-        if (bt_cmd == 1)
-        {
-            break; /* リモートスタート */
-        }
         
-        fprintf(bt, "tail_control : %d\n", TAIL_ANGLE_DRIVE);
-        tail_control(TAIL_ANGLE_DRIVE); /* バランス走行用角度に制御 */
+        // タッチセンサーが押されたら終了
+        if (ev3_touch_sensor_is_pressed(touch_sensor) == 1) break;
+    
+        // バランス走行用角度に制御
+        tail_control(TAIL_ANGLE_DRIVE);
 
-        if (sonar_alert() == 1) /* 障害物検知 */
+        // 障害物を検知したら停止
+        if (sonar_alert() == 1)
         {
-            forward = turn = 0; /* 障害物を検知したら停止 */
+            // 障害物を検知したら停止
+            forward = turn = 0;
         }
         else
         {
-            forward = 30; /* 前進命令 */
+            // 前進命令
+            forward = 40;
         }
-/* この部分をtracerクラスで方向制御できるようにする？*/
-/*
-            fprintf(bt, "ev3_color_sensor_get_reflect : %d\n", ev3_color_sensor_get_reflect(color_sensor));
-            if (ev3_color_sensor_get_reflect(color_sensor) >= (LIGHT_WHITE + LIGHT_BLACK)/2)
-            {
-                fprintf(bt, "left\n");
-                turn = 20; // 左旋回命令
-            }
-            else
-            {
-                fprintf(bt, "right\n");
-                turn = -20; // 右旋回命令
-            }
 
-        }
-*/
         sensor_val = ev3_color_sensor_get_reflect(color_sensor);
         target_val = 20;
 
@@ -220,7 +221,7 @@ void main_task(intptr_t unused) {
 //        turn = Pid.getTurnVal(sensor_val, target_val);
         fprintf(bt, "sensor_val:%d target_val:%d TurnVal:%f \n", sensor_val, target_val, turn);
          
-        /* 倒立振子制御API に渡すパラメータを取得する */
+        // 倒立振子制御API に渡すパラメータを取得する
         motor_ang_l = ev3_motor_get_counts(left_motor);
         motor_ang_r = ev3_motor_get_counts(right_motor);
         gyro = ev3_gyro_sensor_get_rate(gyro_sensor);
@@ -228,8 +229,8 @@ void main_task(intptr_t unused) {
 
         fprintf(bt, "motor_ang_l:%d motor_ang_r:%d gyro:%d volt:%d\n", motor_ang_l, motor_ang_r, gyro, volt);
         
-        /* 倒立振子制御APIを呼び出し、倒立走行するための */
-        /* 左右モータ出力値を得る */
+        // 倒立振子制御APIを呼び出し、倒立走行するための
+        // 左右モータ出力値を得る
         fprintf(bt, "balancer.setCommand: %d : %d\n", forward, turn);
         balancer.setCommand(forward, turn);   // <1>
         balancer.update(gyro, motor_ang_r, motor_ang_l, volt); // <2>
@@ -238,8 +239,8 @@ void main_task(intptr_t unused) {
         pwm_R = balancer.getPwmLeft();        // <3>
         fprintf(bt, "balancer: pwm_L=%d : pwm_R=%d\n", pwm_L, pwm_R);
 
-        /* EV3ではモーター停止時のブレーキ設定が事前にできないため */
-        /* 出力0時に、その都度設定する */
+        // EV3ではモーター停止時のブレーキ設定が事前にできないため
+        // 出力0時に、その都度設定する
         if (pwm_L == 0)
         {
              ev3_motor_stop(left_motor, true);
@@ -258,29 +259,19 @@ void main_task(intptr_t unused) {
             ev3_motor_set_power(right_motor, (int)pwm_R);
         }
 
-        // Bluetooth仮想シリアルポートから1文字を読み取る
-/*        char c = fgetc(bt);
-        fprintf(bt, "ccBluetooth SPP ID: %c\n", c);
-            if (c == '1') {
-
-         if (ev3_touch_sensor_is_pressed(touch_sensor) == 1)
-            break;
-        }
-*/        
-        tslp_tsk(4); /* 4msec周期起動 */
+        // 4msec周期起動
+        tslp_tsk(4);
     }
 
-
+    // モーター停止
     ev3_motor_stop(left_motor, false);
     ev3_motor_stop(right_motor, false);
 
-    tail_control(TAIL_ANGLE_STAND_UP); /* 完全停止用角度に制御 */
-    
-    fprintf(bt, "ext_tsk mae\n");
-
+    // BlueToothタスクを停止
     ter_tsk(BT_TASK);
     fclose(bt);
      
+    // メインタスクを終了
     ext_tsk();
 }
 
