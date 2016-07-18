@@ -12,7 +12,7 @@
 /* sample_c2マクロ */
 #define SONAR_ALERT_DISTANCE 30 /* 超音波センサによる障害物検知距離[cm] */
 /* sample_c3マクロ */
-#define TAIL_ANGLE_STAND_UP  80 /* 完全停止時の角度[度] */
+#define TAIL_ANGLE_STAND_UP  90 /* 完全停止時の角度[度] */
 #define TAIL_ANGLE_DRIVE      3 /* バランス走行時の角度[度] */
 #define P_GAIN             2.5F /* 完全停止用モータ制御比例係数 */
 #define PWM_ABS_MAX          60 /* 完全停止用モータ制御PWM絶対最大値 */
@@ -189,7 +189,7 @@ void main_task(intptr_t unused) {
         else
         {
             // 前進命令
-            forward = 40;
+            forward = 60;
         }
 
         sensor_val = ev3_color_sensor_get_reflect(color_sensor);
@@ -244,8 +244,8 @@ void main_task(intptr_t unused) {
         pwm_R = balancer.getPwmLeft();        // <3>
 //        fprintf(bt, "balancer: pwm_L=%d : pwm_R=%d\n", pwm_L, pwm_R);
 
-        fprintf(bt, "回数,%d,輝度,%d,目標輝度,%d,前進値,%d,旋回値,%f,左モータ角速度,%d,右モータ角速度,%d,ジャイロ,%d,電圧,%d,左モータ出力値,%d,右モータ出力値,%d \n", 
-                loop, sensor_val, target_val, forward, turn, motor_ang_l, motor_ang_r, gyro, volt, pwm_L, pwm_R);
+//        fprintf(bt, "回数,%d,輝度,%d,目標輝度,%d,前進値,%d,旋回値,%f,左モータ角速度,%d,右モータ角速度,%d,ジャイロ,%d,電圧,%d,左モータ出力値,%d,右モータ出力値,%d \n", 
+//                loop, sensor_val, target_val, forward, turn, motor_ang_l, motor_ang_r, gyro, volt, pwm_L, pwm_R);
 
         // EV3ではモーター停止時のブレーキ設定が事前にできないため
         // 出力0時に、その都度設定する
