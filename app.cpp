@@ -129,7 +129,8 @@ void main_task(intptr_t unused) {
     
 
     fprintf(bt, "start dash\n");
-    
+
+/*    
     // 滑らかスタートお試し
     int i;
     i = 0;
@@ -138,7 +139,8 @@ void main_task(intptr_t unused) {
         tail_control(TAIL_ANGLE_STAND_UP + i); 
         tslp_tsk(5); // 5msecウェイト
     }
-    
+*/
+  
 /*
     while(1)
     {
@@ -157,6 +159,10 @@ void main_task(intptr_t unused) {
 
     // pid制御リセット
     pid Pid;
+
+
+    int32_t loop;        
+    loop = 0;
     
     while(1)
     {
@@ -164,7 +170,6 @@ void main_task(intptr_t unused) {
         int gyro, volt;
         int16_t sensor_val;
         int16_t target_val;
-        
 
         // バックボタンが押されたら終了
         if (ev3_button_is_pressed(BACK_BUTTON)) break;
@@ -219,7 +224,7 @@ void main_task(intptr_t unused) {
         }
 
 //        turn = Pid.getTurnVal(sensor_val, target_val);
-        fprintf(bt, "sensor_val:%d target_val:%d TurnVal:%f \n", sensor_val, target_val, turn);
+//        fprintf(bt, "sensor_val:%d target_val:%d TurnVal:%f \n", sensor_val, target_val, turn);
          
         // 倒立振子制御API に渡すパラメータを取得する
         motor_ang_l = ev3_motor_get_counts(left_motor);
@@ -227,17 +232,20 @@ void main_task(intptr_t unused) {
         gyro = ev3_gyro_sensor_get_rate(gyro_sensor);
         volt = ev3_battery_voltage_mV();
 
-        fprintf(bt, "motor_ang_l:%d motor_ang_r:%d gyro:%d volt:%d\n", motor_ang_l, motor_ang_r, gyro, volt);
+//        fprintf(bt, "motor_ang_l:%d motor_ang_r:%d gyro:%d volt:%d\n", motor_ang_l, motor_ang_r, gyro, volt);
         
         // 倒立振子制御APIを呼び出し、倒立走行するための
         // 左右モータ出力値を得る
-        fprintf(bt, "balancer.setCommand: %d : %d\n", forward, turn);
+//        fprintf(bt, "balancer.setCommand: %d : %d\n", forward, turn);
         balancer.setCommand(forward, turn);   // <1>
         balancer.update(gyro, motor_ang_r, motor_ang_l, volt); // <2>
 
         pwm_L = balancer.getPwmRight();       // <3>
         pwm_R = balancer.getPwmLeft();        // <3>
-        fprintf(bt, "balancer: pwm_L=%d : pwm_R=%d\n", pwm_L, pwm_R);
+//        fprintf(bt, "balancer: pwm_L=%d : pwm_R=%d\n", pwm_L, pwm_R);
+
+        fprintf(bt, "回数,%d,輝度,%d,目標輝度,%d,前進値,%d,旋回値,%f,左モータ角速度,%d,右モータ角速度,%d,ジャイロ,%d,電圧,%d,左モータ出力値,%d,右モータ出力値,%d \n", 
+                loop, sensor_val, target_val, forward, turn, motor_ang_l, motor_ang_r, gyro, volt, pwm_L, pwm_R);
 
         // EV3ではモーター停止時のブレーキ設定が事前にできないため
         // 出力0時に、その都度設定する
@@ -258,6 +266,8 @@ void main_task(intptr_t unused) {
         {
             ev3_motor_set_power(right_motor, (int)pwm_R);
         }
+        
+        loop++;
 
         // 4msec周期起動
         tslp_tsk(4);
